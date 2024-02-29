@@ -9,7 +9,8 @@
     opacity: 0.2;
 }
 .main-container{
-    max-width: 500px;
+    max-width: 550px;
+    padding: 20px;
     margin:auto;
     .header{
         display: flex;
@@ -19,6 +20,8 @@
             width: 100%;
             padding:5px;
             display: flex;
+            flex-direction: column;
+            align-items: center;
             .title{
                 color: #776e65;
                 font-weight: 700;
@@ -60,15 +63,15 @@
 }
 
 .box-container{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    // gap: 5px;
     button{
         display: none;
     }
     background-color: aqua;
-    display: flex;
-    flex-wrap: wrap;
     background-color: #BBAC9F;
     margin: auto;
-    justify-content: center;
     border-radius: 10px;
     margin:50px auto;
     padding: 10px;
@@ -88,13 +91,81 @@
     }
 }
 .item{
-    width:100px;
-    height: 100px;
+    // width:100px;
+    // height: 100px;
+    aspect-ratio: 1/1;
     background-color: #CCC0B3;
-    margin: 10px;
-    color:white;
-    font-size: 40px;
+    margin: 5px;
+    color:#f9f6f2;
+    font-size: 25px;
+    font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 4px;
+}
+
+.num2{
+    background-color: #EEE4DA;
+    color: #776e65;
+}
+.num4{
+    background-color: #EEE0C9;
+    color: #776e65;
+}
+.num8{
+    background-color: #F3B279;
+    color: white;
+}
+.num16{
+    background-color: #F69563;
+    color:white;
+}
+.num32{
+    background-color: #F77C5F;
+    color: white;
+}
+.num64{
+    background-color: #F75F3B;
+    color: white;
+}
+.num128{
+    background-color: #edd073;
+    font-size: 20px;
+}
+.num256{
+    background-color:  #edcc62;
+    font-size: 20px;
+}
+.num512{
+    background-color: #edc950;
+    font-size: 20px;
+}
+.num1024{
+    background-color: #edc53f;
+    font-size: 15px;
+}
+.num2048{
+    background-color: #edc22e;
+    font-size: 15px;
+    // font-size: 35px;
+}
+
+@media  (min-width:568px){
+    .item{
+        font-size:55px;
+    }
+    .num256,.num512,.num128{
+        font-size: 45px;
+    }
+    .num1024,.num2048{
+        font-size: 35px;
+    }
+    .main-container{
+        .header{
+            .score-title{
+                flex-direction: row;
+            }
+        }
+    }
 }
