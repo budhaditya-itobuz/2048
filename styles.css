@@ -1,0 +1,101 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "clear sans", "helvetica neue", "Arial", "sans-serif";
+}
+
+.opacity {
+  opacity: 0.2;
+}
+
+.main-container {
+  max-width: 500px;
+  margin: auto;
+}
+.main-container .header {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+.main-container .header .score-title {
+  width: 100%;
+  padding: 5px;
+  display: flex;
+}
+.main-container .header .score-title .title {
+  color: #776e65;
+  font-weight: 700;
+  font-size: 70px;
+}
+.main-container .header .score-title .score-group {
+  display: flex;
+  align-items: center;
+  flex-grow: 2;
+  justify-content: end;
+}
+.main-container .header .score-title .score-group .score-card {
+  background-color: #BBAC9F;
+  border-radius: 4px;
+  margin: 5px;
+  padding: 5px 20px;
+}
+.main-container .header .score-title .score-group .score-card h3 {
+  color: #EEE3DA;
+  font-size: 15px;
+}
+.main-container .header .score-title .score-group .score-card h2 {
+  color: white;
+  text-align: center;
+}
+.main-container .header button {
+  background-color: #8F7A65;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 10px;
+  margin: 0 10px;
+}
+
+.box-container {
+  background-color: aqua;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #BBAC9F;
+  margin: auto;
+  justify-content: center;
+  border-radius: 10px;
+  margin: 50px auto;
+  padding: 10px;
+  position: relative;
+}
+.box-container button {
+  display: none;
+}
+.box-container .game-over {
+  opacity: 1 !important;
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  background-color: #776e65;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 3px;
+}
+
+.item {
+  width: 100px;
+  height: 100px;
+  background-color: #CCC0B3;
+  margin: 10px;
+  color: white;
+  font-size: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}/*# sourceMappingURL=styles.css.map */
