@@ -6,17 +6,10 @@ const liveScore = document.getElementById("live-score")
 const bestScoreBtn = document.getElementById('best-score')
 const gameOverBtn = document.getElementById('game-over')
 
-// const colorStyle=[]
-// let i=2
-// while(i<=4096)
-// {
-//     i=i*2
-//     colorStyle.push(i)
-// }
-
-// console.log(colorStyle)
-
-// console.log(colorStyle)
+let touchstartX = 0;
+let touchstartY = 0;
+let touchendX = 0;
+let touchendY = 0;
 
 const width = 4
 
@@ -125,6 +118,47 @@ const gameOver = () => {
 }
 
 
+const play = (key) => {
+    if (flagGameOver === 1)
+        return
+    const resultCopy = [...result]
+    switch (key) {
+        case "ArrowLeft":
+            moveLeft()
+            break
+        case "ArrowRight":
+            rotate(2)
+            moveLeft()
+            rotate(2)
+            break
+        case "ArrowUp":
+            rotate(3)
+            moveLeft()
+            rotate(1)
+            break
+        case "ArrowDown":
+            rotate(1)
+            moveLeft()
+            rotate(3)
+            break
+    }
+    const isValidMove = JSON.stringify(result) !== JSON.stringify(resultCopy)
+    if (!isValidMove && result.flat(1).filter(item => item === 0).length === 0) {
+        gameOver()
+        return
+    }
+    if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(key) && isValidMove) {
+        generate()
+        setData(enums.gameState, result)
+        setData(enums.liveScore, score)
+        setData(enums.bestScore, bestScore)
+        liveScore.innerText = score
+        bestScoreBtn.innerText = bestScore
+        resultMap()
+    }
+}
+
+
 
 (() => {
     if (!getData(enums.bestScore)) {
@@ -147,48 +181,36 @@ const gameOver = () => {
     resultMap()
 })()
 
+const touchEvaluate=()=>{
+    if (touchendX < touchstartX) {
+        play("ArrowLeft");
+    }
+    if (touchendX > touchstartX) {
+        play("ArrowRight");
+    }
+    if (touchendY < touchstartY) {
+        play("ArrowDown")
+    }
+    if (touchendY > touchstartY) {
+        play("ArrowUp")
+    }
+}
 
+document.addEventListener('touchstart', (event) => {
+    touchstartX = event.screenX;
+    touchstartY = event.screenY;
+    touchEvaluate()
+})
+
+document.addEventListener('touchend', (event) => {
+    touchendX = event.screenX
+    touchendY = event.screenY
+    touchEvaluate()
+})
 
 document.addEventListener('keydown', (e) => {
     e.preventDefault()
-    if (flagGameOver === 1)
-        return
-    const resultCopy = [...result]
-    switch (e.key) {
-        case "ArrowLeft":
-            moveLeft()
-            break
-        case "ArrowRight":
-            rotate(2)
-            moveLeft()
-            rotate(2)
-            break
-        case "ArrowUp":
-            rotate(3)
-            moveLeft()
-            rotate(1)
-            break
-        case "ArrowDown":
-            rotate(1)
-            moveLeft()
-            rotate(3)
-            break
-    }
-    const isValidMove = JSON.stringify(result) !== JSON.stringify(resultCopy)
-    if (!isValidMove && result.flat(1).filter(item => item === 0).length === 0)
-    {
-        gameOver()
-        return
-    }
-    if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key) && isValidMove) {
-        generate()
-        setData(enums.gameState, result)
-        setData(enums.liveScore, score)
-        setData(enums.bestScore, bestScore)
-        liveScore.innerText = score
-        bestScoreBtn.innerText = bestScore
-        resultMap()
-    }
+    play(e.key)
 }
 )
 
