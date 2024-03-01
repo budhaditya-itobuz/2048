@@ -5,6 +5,10 @@
   font-family: "clear sans", "helvetica neue", "Arial", "sans-serif";
 }
 
+body {
+  touch-action: none;
+}
+
 .opacity {
   opacity: 0.2;
 }

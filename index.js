@@ -6,6 +6,11 @@ const liveScore = document.getElementById("live-score")
 const bestScoreBtn = document.getElementById('best-score')
 const gameOverBtn = document.getElementById('game-over')
 
+let touchstartX = 0;
+let touchstartY = 0;
+let touchendX = 0;
+let touchendY = 0;
+
 const width = 4
 
 let nodeMatrix = []
@@ -16,6 +21,7 @@ const emptyResult = [
     [0, 0, 0, 0],
     [0, 0, 0, 0]
 ]
+
 let result
 let score = 0
 let bestScore = 0
@@ -46,24 +52,24 @@ const createBox = () => {
 }
 
 const generate = () => {
-    const emptyBoxes = []
+    const resultCopy = []
     for (let i = 0; i < width; i++) {
         for (let j = 0; j < width; j++) {
             if (result[i][j] === 0)
-                emptyBoxes.push({ i: i, j: j })
+                resultCopy.push({ i: i, j: j })
         }
     }
-    if (emptyBoxes.length === 0) {
+    if (resultCopy.length === 0) {
         gameOver()
         return
     }
-    const box = Math.floor(Math.random() * emptyBoxes.length)
+    const box = Math.floor(Math.random() * resultCopy.length)
     const number = Math.floor(Math.random() * 2)
     if (number === 1) {
-        result[emptyBoxes[box].i][emptyBoxes[box].j] = 2
+        result[resultCopy[box].i][resultCopy[box].j] = 2
     }
     else {
-        result[emptyBoxes[box].i][emptyBoxes[box].j] = 4
+        result[resultCopy[box].i][resultCopy[box].j] = 4
     }
 }
 
@@ -116,7 +122,7 @@ const gameOver = () => {
 const play = (key) => {
     if (flagGameOver === 1)
         return
-    const resultCopy = [...result]
+    const resultCopy = [...result.map(arr => [...arr])]
     switch (key) {
         case "ArrowLeft":
             moveLeft()
@@ -137,12 +143,10 @@ const play = (key) => {
             rotate(3)
             break
     }
-    const isValidMove = JSON.stringify(result) !== JSON.stringify(resultCopy)
-    if (!isValidMove && result.flat(1).filter(item => item === 0).length === 0) {
-        gameOver()
-        return
-    }
-    if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(key) && isValidMove) {
+
+    const isValidMove = JSON.stringify(result) === JSON.stringify(resultCopy)
+
+    if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(key)) {
         generate()
         setData(enums.gameState, result)
         setData(enums.liveScore, score)
@@ -152,8 +156,6 @@ const play = (key) => {
         resultMap()
     }
 }
-
-
 
 (() => {
     if (!getData(enums.bestScore)) {
@@ -176,21 +178,39 @@ const play = (key) => {
     resultMap()
 })()
 
-document.addEventListener('swiped-left', (e)=> {
-    console.log('l')
-    play("ArrowLeft")
-});
-document.addEventListener('swiped-right', (e)=> {
-    play("ArrowRight")
-});
-document.addEventListener('swiped-up', (e)=> {
-    play("ArrowUp")
-});
-document.addEventListener('swiped-down', (e)=> {
-    play("ArrowDown")
-});
+const touchEvaluate = () => {
+    console.log(touchstartX,touchstartY,touchendX,touchendY)
 
+    if(Math.abs(touchendY - touchstartX) > Math.abs(touchendX - touchstartX))
+    {
+        if(touchstartY>touchendY)
+        play("ArrowUp")
+        else
+        play("ArrowDown")
+    }
+    else
+    {
+        if(touchendX>touchstartX)
+        play("ArrowLeft")
+        else
+        play("Arrowright")
+    }
+}
 
+// document.addEventListener('touchstart', (event) => {
+//     event.preventDefault()
+//     const touchObject = event.changedTouches[0]
+//     touchstartX = touchObject.screenX
+//     touchstartY = touchObject.screenY
+// })
+
+// document.addEventListener('touchend', (event) => {
+//     event.preventDefault()
+//     const touchObject = event.changedTouches[0]
+//     touchendX = touchObject.screenX
+//     touchendY = touchObject.screenY
+//     touchEvaluate()
+// })
 
 document.addEventListener('keydown', (e) => {
     e.preventDefault()
@@ -205,10 +225,8 @@ newGame.addEventListener("click", () => {
     localStorage.removeItem(enums.liveScore)
     score = 0
     liveScore.innerText = 0
-    result = emptyResult
+    result = [...emptyResult.map(arr => [...arr])]
+    console.log(emptyResult)
     generate()
     resultMap()
 })
-
-
-
