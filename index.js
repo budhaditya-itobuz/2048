@@ -6,11 +6,6 @@ const liveScore = document.getElementById("live-score")
 const bestScoreBtn = document.getElementById('best-score')
 const gameOverBtn = document.getElementById('game-over')
 
-let touchstartX = 0;
-let touchstartY = 0;
-let touchendX = 0;
-let touchendY = 0;
-
 const width = 4
 
 let nodeMatrix = []
@@ -181,32 +176,21 @@ const play = (key) => {
     resultMap()
 })()
 
-const touchEvaluate=()=>{
-    if (touchendX < touchstartX) {
-        play("ArrowLeft");
-    }
-    if (touchendX > touchstartX) {
-        play("ArrowRight");
-    }
-    if (touchendY < touchstartY) {
-        play("ArrowDown")
-    }
-    if (touchendY > touchstartY) {
-        play("ArrowUp")
-    }
-}
+document.addEventListener('swiped-left', (e)=> {
+    console.log('l')
+    play("ArrowLeft")
+});
+document.addEventListener('swiped-right', (e)=> {
+    play("ArrowRight")
+});
+document.addEventListener('swiped-up', (e)=> {
+    play("ArrowUp")
+});
+document.addEventListener('swiped-down', (e)=> {
+    play("ArrowDown")
+});
 
-document.addEventListener('touchstart', (event) => {
-    touchstartX = event.screenX;
-    touchstartY = event.screenY;
-    touchEvaluate()
-})
 
-document.addEventListener('touchend', (event) => {
-    touchendX = event.screenX
-    touchendY = event.screenY
-    touchEvaluate()
-})
 
 document.addEventListener('keydown', (e) => {
     e.preventDefault()
