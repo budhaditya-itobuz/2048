@@ -1,7 +1,7 @@
 import { getData, setData, enums } from "./helper.js"
 
 const container = document.getElementById("container")
-const newGame = document.getElementById("new-game")
+const newGameBtn = document.getElementById("new-game")
 const liveScore = document.getElementById("live-score")
 const bestScoreBtn = document.getElementById('best-score')
 const gameOverBtn = document.getElementById('game-over')
@@ -112,16 +112,56 @@ const moveLeft = () => {
     result = initialResult
 }
 
+const checkGameOver = () => {
+    const iterate=(arr)=>{
+        for(let i=0;i<arr.length;i++)
+        {
+            for(let j=0;j<arr.length-1;j++)
+            {
+                if(arr[i][j]===arr[i][j+1])
+                return false
+            }
+        }
+        return true
+    }
+
+    const demoArr = [...result.map(arr => [...arr])]
+    const demoArrRotate = demoArr[0].map((val, index) => demoArr.map(row => row[index]).reverse())
+    console.log(demoArr)
+    console.log(demoArrRotate)
+    return iterate(demoArr) && iterate(demoArrRotate)
+}
+
 const gameOver = () => {
     container.classList.add('opacity')
     gameOverBtn.classList.add("game-over")
     flagGameOver = 1
+    localStorage.removeItem(3)
+    localStorage.removeItem(2)
+}
+const newGame = () => {
+    container.classList.remove('opacity')
+    gameOverBtn.classList.remove('game-over')
+    localStorage.removeItem(enums.gameState)
+    localStorage.removeItem(enums.liveScore)
+    score = 0
+    liveScore.innerText = 0
+    result = [...emptyResult.map(arr => [...arr])]
+    console.log(result)
+    generate()
+    resultMap()
 }
 
 
 const play = (key) => {
-    if (flagGameOver === 1)
+    if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(key))
         return
+
+    if (flagGameOver === 1) {
+        newGame()
+        flagGameOver = 0
+        return
+    }
     const resultCopy = [...result.map(arr => [...arr])]
     switch (key) {
         case "ArrowLeft":
@@ -144,10 +184,14 @@ const play = (key) => {
             break
     }
 
-    const isValidMove = JSON.stringify(result) === JSON.stringify(resultCopy)
-
-    if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(key)) {
+    const isValidMove = !(JSON.stringify(result) === JSON.stringify(resultCopy))
+    console.log(checkGameOver())
+    if(checkGameOver())
+    gameOver()
+    if (isValidMove) {
         generate()
+        if (flagGameOver === 1)
+            return
         setData(enums.gameState, result)
         setData(enums.liveScore, score)
         setData(enums.bestScore, bestScore)
@@ -156,6 +200,7 @@ const play = (key) => {
         resultMap()
     }
 }
+
 
 (() => {
     if (!getData(enums.bestScore)) {
@@ -179,21 +224,19 @@ const play = (key) => {
 })()
 
 const touchEvaluate = () => {
-    console.log(touchstartX,touchstartY,touchendX,touchendY)
+    console.log(touchstartX, touchstartY, touchendX, touchendY)
 
-    if(Math.abs(touchendY - touchstartX) > Math.abs(touchendX - touchstartX))
-    {
-        if(touchstartY>touchendY)
-        play("ArrowUp")
+    if (Math.abs(touchendY - touchstartX) > Math.abs(touchendX - touchstartX)) {
+        if (touchstartY > touchendY)
+            play("ArrowUp")
         else
-        play("ArrowDown")
+            play("ArrowDown")
     }
-    else
-    {
-        if(touchendX>touchstartX)
-        play("ArrowLeft")
+    else {
+        if (touchendX > touchstartX)
+            play("ArrowLeft")
         else
-        play("Arrowright")
+            play("Arrowright")
     }
 }
 
@@ -218,15 +261,7 @@ document.addEventListener('keydown', (e) => {
 }
 )
 
-newGame.addEventListener("click", () => {
-    container.classList.remove('opacity')
-    gameOverBtn.classList.remove('game-over')
-    localStorage.removeItem(enums.gameState)
-    localStorage.removeItem(enums.liveScore)
-    score = 0
-    liveScore.innerText = 0
-    result = [...emptyResult.map(arr => [...arr])]
-    console.log(emptyResult)
-    generate()
-    resultMap()
+
+newGameBtn.addEventListener("click", () => {
+    newGame()
 })
