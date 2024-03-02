@@ -213,7 +213,7 @@ const play = (key) => {
 const touchEvaluate = () => {
     console.log(touchstartX, touchstartY, touchendX, touchendY);
 
-    if (Math.abs(touchendY - touchstartX) > Math.abs(touchendX - touchstartX)) {
+    if (Math.abs(touchendY - touchstartY) > Math.abs(touchendX - touchstartX)) {
         if (touchstartY > touchendY) play("ArrowUp");
         else play("ArrowDown");
     } else {
