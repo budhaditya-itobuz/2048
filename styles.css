@@ -139,27 +139,27 @@ body {
 
 .num128 {
   background-color: #edd073;
-  font-size: 20px;
+  font-size: 25px;
 }
 
 .num256 {
   background-color: #edcc62;
-  font-size: 20px;
+  font-size: 25px;
 }
 
 .num512 {
   background-color: #edc950;
-  font-size: 20px;
+  font-size: 25px;
 }
 
 .num1024 {
   background-color: #edc53f;
-  font-size: 15px;
+  font-size: 20px;
 }
 
 .num2048 {
   background-color: #edc22e;
-  font-size: 15px;
+  font-size: 20px;
 }
 
 @media (min-width: 568px) {
