@@ -99,7 +99,7 @@ body {
   background-color: #CCC0B3;
   margin: 5px;
   color: #f9f6f2;
-  font-size: 25px;
+  font-size: 30px;
   font-weight: bold;
   display: flex;
   justify-content: center;
@@ -166,10 +166,13 @@ body {
   .item {
     font-size: 55px;
   }
-  .num256, .num512, .num128 {
+  .num256,
+  .num512,
+  .num128 {
     font-size: 45px;
   }
-  .num1024, .num2048 {
+  .num1024,
+  .num2048 {
     font-size: 35px;
   }
   .main-container .header .score-title {

@@ -1,58 +1,74 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "clear sans", "helvetica neue", "Arial", "sans-serif";
 }
 
-body{
+body {
     touch-action: none;
 }
-.opacity{
+
+.opacity {
     opacity: 0.2;
 }
-.main-container{
+.animation-new-item{
+    // @keyframes example {
+    //     from {font-size: 0;}
+    //     to {font-size: yellow;}
+    //   }
+    // from
+}
+.main-container {
     max-width: 550px;
     padding: 20px;
-    margin:auto;
-    .header{
+    margin: auto;
+
+    .header {
         display: flex;
         flex-direction: column;
         align-items: end;
-        .score-title{
+
+        .score-title {
             width: 100%;
-            padding:5px;
+            padding: 5px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            .title{
+
+            .title {
                 color: #776e65;
                 font-weight: 700;
                 font-size: 70px;
             }
-            .score-group{
+
+            .score-group {
                 display: flex;
                 align-items: center;
                 flex-grow: 2;
                 justify-content: end;
-                .score-card{
-    
+
+                .score-card {
+
                     background-color: #BBAC9F;
                     border-radius: 4px;
                     margin: 5px;
                     padding: 5px 20px;
-                    h3{
+
+                    h3 {
                         color: #EEE3DA;
                         font-size: 15px;
                     }
-                    h2{
-                        color:white;
+
+                    h2 {
+                        color: white;
                         text-align: center;
                     }
                 }
             }
         }
-        button{
+
+        button {
             background-color: #8F7A65;
             color: white;
             border: none;
@@ -65,13 +81,15 @@ body{
     }
 }
 
-.box-container{
+.box-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+
     // gap: 5px;
-    button{
+    button {
         display: none;
     }
+
     background-color: aqua;
     background-color: #BBAC9F;
     margin: auto;
@@ -79,26 +97,28 @@ body{
     margin:50px auto;
     padding: 10px;
     position: relative;
-    .game-over{
+
+    .game-over {
         opacity: 1 !important;
         display: inline-block;
-        position:absolute;
-        top:50%;
+        position: absolute;
+        top: 50%;
         background-color: #776e65;
         color: white;
         border: none;
-        padding:10px;
+        padding: 10px;
         font-size: 18px;
         font-weight: 700;
         border-radius: 3px;
     }
 }
-.item{
+
+.item {
     aspect-ratio: 1/1;
     background-color: #CCC0B3;
     margin: 5px;
-    color:#f9f6f2;
-    font-size: 25px;
+    color: #f9f6f2;
+    font-size: 30px;
     font-weight: bold;
     display: flex;
     justify-content: center;
@@ -106,65 +126,80 @@ body{
     border-radius: 4px;
 }
 
-.num2{
+.num2 {
     background-color: #EEE4DA;
     color: #776e65;
 }
-.num4{
+
+.num4 {
     background-color: #EEE0C9;
     color: #776e65;
 }
-.num8{
+
+.num8 {
     background-color: #F3B279;
     color: white;
 }
-.num16{
+
+.num16 {
     background-color: #F69563;
-    color:white;
+    color: white;
 }
-.num32{
+
+.num32 {
     background-color: #F77C5F;
     color: white;
 }
-.num64{
+
+.num64 {
     background-color: #F75F3B;
     color: white;
 }
-.num128{
+
+.num128 {
     background-color: #edd073;
     font-size: 20px;
 }
-.num256{
-    background-color:  #edcc62;
+
+.num256 {
+    background-color: #edcc62;
     font-size: 20px;
 }
-.num512{
+
+.num512 {
     background-color: #edc950;
     font-size: 20px;
 }
-.num1024{
+
+.num1024 {
     background-color: #edc53f;
     font-size: 15px;
 }
-.num2048{
+
+.num2048 {
     background-color: #edc22e;
     font-size: 15px;
-    // font-size: 35px;
 }
 
-@media  (min-width:568px){
-    .item{
-        font-size:55px;
+@media (min-width:568px) {
+    .item {
+        font-size: 55px;
     }
-    .num256,.num512,.num128{
+
+    .num256,
+    .num512,
+    .num128 {
         font-size: 45px;
     }
-    .num1024,.num2048{
+
+    .num1024,
+    .num2048 {
         font-size: 35px;
     }
-    .main-container{
-        .header{
-            .score-title{
+
+    .main-container {
+        .header {
+            .score-title {
                 flex-direction: row;
             }
         }
