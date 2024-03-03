@@ -55,20 +55,13 @@ const generate = () => {
     const resultCopy = [];
     for (let i = 0; i < width; i++) {
         for (let j = 0; j < width; j++) {
-            if (result[i][j] === 0) resultCopy.push({ i: i, j: j });
+            if (result[i][j] === 0) resultCopy.push({ row: i, col: j });
         }
     }
-    // if (resultCopy.length === 0) {
-    //     gameOver();
-    //     return;
-    // }
+
     const box = Math.floor(Math.random() * resultCopy.length);
-    const number = Math.floor(Math.random() * 2);
-    if (number === 1) {
-        result[resultCopy[box].i][resultCopy[box].j] = 2;
-    } else {
-        result[resultCopy[box].i][resultCopy[box].j] = 4;
-    }
+    let { row, col } = resultCopy[box];
+    result[row][col] = Math.random() < 0.9 ? 2 : 4;
 };
 
 const resultMap = () => {
@@ -106,22 +99,14 @@ const moveLeft = () => {
 };
 
 const checkGameOver = () => {
-    const iterate = (arr) => {
-        for (let i = 0; i < width; i++) {
-            for (let j = 0; j < width - 1; j++) {
-                if (arr[i][j] === arr[i][j + 1]) return false;
-            }
+    for (let i = 0; i < width; i++) {
+        for (let j = 0; j < width; j++) {
+            if (result[i][j] === 0) return false;
+            if (j < width-1 && result[i][j] === result[i][j + 1]) return false;
+            if (i < width-1 && result[i][j] === result[i + 1][j]) return false;
         }
-        return true;
-    };
-
-    const demoArr = [...result.map((arr) => [...arr])];
-    const demoArrRotate = demoArr[0].map((val, index) =>
-        demoArr.map((row) => row[index]).reverse()
-    );
-    console.log(demoArr);
-    console.log(demoArrRotate);
-    return iterate(demoArr) && iterate(demoArrRotate);
+    }
+    return true;
 };
 
 const gameOver = () => {
@@ -139,8 +124,8 @@ const newGame = () => {
     score = 0;
     liveScore.innerText = 0;
     result = [...emptyResult.map((arr) => [...arr])];
-    console.log(result);
-    generate();
+    generate()
+    generate()
     resultMap();
 };
 
@@ -206,12 +191,16 @@ const play = (key) => {
     liveScore.innerText = score;
     bestScoreBtn.innerText = bestScore;
     createBox();
-    if (result.flat(1).filter((item) => item !== 0).length === 0) generate();
+    if (result.flat(1).filter((item) => item !== 0).length === 0) 
+    {
+        generate()
+        generate()
+    }
     resultMap();
 })();
 
 const touchEvaluate = () => {
-    console.log(touchstartX, touchstartY, touchendX, touchendY);
+    if (touchendX === touchstartX && touchstartY === touchendY) return;
 
     if (Math.abs(touchendY - touchstartY) > Math.abs(touchendX - touchstartX)) {
         if (touchstartY > touchendY) play("ArrowUp");
@@ -222,14 +211,14 @@ const touchEvaluate = () => {
     }
 };
 
-document.addEventListener("touchstart", (event) => {
+container.addEventListener("touchstart", (event) => {
     event.preventDefault();
     const touchObject = event.changedTouches[0];
     touchstartX = touchObject.screenX;
     touchstartY = touchObject.screenY;
 });
 
-document.addEventListener("touchend", (event) => {
+container.addEventListener("touchend", (event) => {
     event.preventDefault();
     const touchObject = event.changedTouches[0];
     touchendX = touchObject.screenX;
